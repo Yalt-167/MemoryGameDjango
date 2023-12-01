@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path("", views.Home, name="Home"),
-    path("DisplayUsers", views.DisplayUsers, name="DisplayUsers"),
-    path('', MemoryGameView.as_view(), name='memory_game'),
-    path('flip_card/<int:card_id>/', flip_card, name='flip_card')
+    # path("DisplayUsers", views.DisplayUsers, name="DisplayUsers"),
+    path('', views.MemoryGameView.as_view(), name='Memory'),
+    path('flip_card/<int:card_id>/', views.flip_card, name='flip_card')
 ]

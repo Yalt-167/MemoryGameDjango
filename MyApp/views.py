@@ -7,9 +7,9 @@ import random as rdm
 def Home(request):
     return render(request, "home.html")
 
-def DisplayUsers(request):
-    # items = Users.objects.all()
-    return render(request, "DisplayUsers.html", {"users": items})
+# def DisplayUsers(request):
+#     # items = Users.objects.all()
+#     return render(request, "DisplayUsers.html", {"users": items})
 
 
 class MemoryGameView(View):
