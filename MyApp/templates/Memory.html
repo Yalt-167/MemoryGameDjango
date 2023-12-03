@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        #gameGrid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* 1fr -> 1 fraction -> the elements are evenly spaced (taking 1/firstRepatArgument of the space available) */ 
+            gap: 20px; /* gap between grid items */
+        }
+
+        .gridItem {
+            background-color: #e0e0e0;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id = "gameGrid">
+        {% for card in cards %}
+        <!-- onclick="flipCard('{{ card.id }}')" -->
+        <div class="memoryCard gridItem" >
+            <div class="face front">{{ card.name }}</div>
+            <div class="face back"> {% static 'images/' %}{{ card.name }}.png<img src="{% static 'images/' %}{{ card.name }}.png" alt="hilariousMeme({{ card.name }})" width="100px"></div>
+        </div>
+        {% endfor %}
+        
+    </div>
+
+<!-- <script>
+    function flipCard(cardId) {
+        fetch(`/flip_card/${cardId}/`);
+        // You can add logic here to update the displayed cards on the client side if needed
+    }
+</script> -->
+
+</body>
+</html>
