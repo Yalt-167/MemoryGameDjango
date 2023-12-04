@@ -45,46 +45,48 @@
         let flippedThatRound = [];
         let timeoutIsActive = false;
         log = console.log;
+
         function FlipCard(cardName, cardIdx)
         {
             if (timeoutIsActive) { return; }
+
             let card = document.getElementById(cardIdx);
+
+            if (flippedThatRound.includes(card)) { return; }
+
             let cardFrontReference = `/static/images/${cardName}.png`;
-            if (card.src !== cardBack) // if isn t already flipped
+            if (card.src == cardBack) { return; } // if isn t already flipped
+            
+            // Update the image s source
+            flippedThatRound.push(card);
+            card.src = cardFrontReference;
+
+            if (flippedThatRound.length == 2)
             {
-                // Update the image s source
-                flippedThatRound.push(card);
-                card.src = cardFrontReference;
-    
-                if (flippedThatRound.length == 2)
+                rounds++;
+                if (flippedThatRound[0].src !== flippedThatRound[1].src) // if both flipped card are different
                 {
-                    rounds++;
-                    if (flippedThatRound[0].src !== flippedThatRound[1].src) // if both flipped card are different
-                    {
-                        setTimeout(
-                            () => {
-                                ResetCards(flippedThatRound[0], flippedThatRound[1]),
-                                timeoutIsActive = false
-                                },
-                            1000
-                            )
-                        timeoutIsActive = true;
-                    }
-                    else
-                    {
-                        flippedThatRound[0].onclick = flippedThatRound[0].onclick = () => {}; // effectively erase the flip behaviour
-                        flippedThatRound = [];
-                        pairsFound++;
-                        if (PAIRSCOUNT === pairsFound)
-                        {
-                            // game won -> redirect to some page
-                        }
-                    }
-    
-                    
+                    setTimeout(
+                        () => {
+                            ResetCards(flippedThatRound[0], flippedThatRound[1]),
+                            timeoutIsActive = false
+                            },
+                        1000
+                        )
+                    timeoutIsActive = true;
                 }
-                return;
+                else
+                {
+                    flippedThatRound[0].onclick = flippedThatRound[0].onclick = () => {}; // effectively erase the flip behaviour
+                    flippedThatRound = [];
+                    pairsFound++;
+                    if (PAIRSCOUNT == pairsFound)
+                    {
+                        // game won -> redirect to some page
+                    }
+                }
             }
+
     
             // card already flipped
             
