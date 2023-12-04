@@ -17,14 +17,14 @@ from .models import Performance
 # ==============================================
 
 def Home(request):
-    return render(request, "home.html")
+    return render(request, "home.phtml")
 def about(request):
-    return render(request, "about.html")
+    return render(request, "about.phtml")
 def contact(request):
-    return render(request, "contact.html")
+    return render(request, "contact.phtml")
 def leaderboard(request):
     top_performances = Performance.objects.order_by('-score')[:10]
-    return render(request, 'leaderboard.html', {'top_performances': top_performances})
+    return render(request, 'leaderboard.phtml', {'top_performances': top_performances})
 # ==============================================
 # ===============================================================================================
 
@@ -34,9 +34,9 @@ def leaderboard(request):
 # ==============================================
 
 def inscription(request):
-    return render(request, "inscription.html")
+    return render(request, "inscription.phtml")
 def connexion(request):
-    return render(request, "connexion.html")
+    return render(request, "connexion.phtml")
 
 # ==============================================
 # ===============================================================================================
