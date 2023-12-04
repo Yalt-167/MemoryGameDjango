@@ -23,9 +23,9 @@ if __name__ == '__main__':
 
 
 
-from MyApp.models import Box
+# from MyApp.models import Box
 
 
-for i in range(1,9):
-    Box.objects.create(value=str(i))
-    Box.objects.create(value=str(i))
+# for i in range(1,9):
+#     Box.objects.create(value=str(i))
+#     Box.objects.create(value=str(i))

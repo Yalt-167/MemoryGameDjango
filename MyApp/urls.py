@@ -1,22 +1,16 @@
 from django.urls import path
 from . import views
+# from .views import classement_view
+from .views import leaderboard
+from .views import inscription
+
 
 urlpatterns = [
     path("", views.Home, name="Home"),
     # path("", views.DisplayUsers, name="DisplayUsers"),
+    path('leaderboard/', leaderboard, name='leaderboard'),
+    path("",views.inscription, name ="inscription"),
+   
 ]
 
-from django.urls import path
-from .views import memory_game
 
-urlpatterns = [
-    path('memory-game/', memory_game, name='memory_game'),
-]
-
-from django.contrib import admin
-from django.urls import path, include
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('game/', include('game.urls')),
-]
