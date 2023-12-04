@@ -8,8 +8,8 @@ from .views import inscription
 urlpatterns = [
     path("", views.Home, name="Home"),
     # path("", views.DisplayUsers, name="DisplayUsers"),
-    path('leaderboard/', leaderboard, name='leaderboard'),
-    path("",views.inscription, name ="inscription"),
+    path("leaderboard/", leaderboard, name="leaderboard"),
+    path("inscription/",views.inscription, name ="inscription"),
    
 ]
 
