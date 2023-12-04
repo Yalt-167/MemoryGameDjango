@@ -71,7 +71,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'WebSiteGame.wsgi.application'
 
-
+AUTH_USER_MODEL = 'models.UserProfile'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
