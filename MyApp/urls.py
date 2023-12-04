@@ -1,16 +1,20 @@
 from django.urls import path
-from . import views
-# from .views import classement_view
+from .views import Home
 from .views import leaderboard
 from .views import inscription
+from .views import connexion
+from .views import about
+from .views import contact
 
 
 urlpatterns = [
-    path("", views.Home, name="Home"),
+    path("", Home, name="Home"),
     # path("", views.DisplayUsers, name="DisplayUsers"),
     path("leaderboard/", leaderboard, name="leaderboard"),
-    path("inscription/",views.inscription, name ="inscription"),
-   
+    path("inscription/",inscription, name ="inscription"),
+    path("connexion/",connexion, name ="connexion"),
+    path("about/",about, name ="about"),
+    path("contact/",contact, name ="contact"),
 ]
 
 
