@@ -1,34 +1,74 @@
-from django.shortcuts import render, HttpResponse, redirect
-from .models import Card
-import random as rdm
+from django.shortcuts import render, HttpResponse
+from .models import Performance
+from django.views import View
+# from .models import Box
+# from .models import Users
 # Create your views here.
-# file where the differents pages are created
-# a render is made from a .html file known as template (allow us to embed python code in it)
-# -> the render enables us to pass arguments in the .html (as a JSON) making more dynamic pages possible
+# ===============================================================================================
+
+
+# ===============================================================================================
+class Index(View):
+    templatee = "index.html"
+
+    def get (self,request):
+        return render(request,self.template)
+    
+
+class Login(View):
+    template = 'Login.html'
+
+    def get(self,request):
+        return render(request,self.template)
+    
+
+
+
+# ==============================================================================================
+# functions that allow for the site to work, they allow the display of the html 
+# first part are the ones of the far left of our nav bar
+# ==============================================
 
 def Home(request):
     return render(request, "home.html")
+def about(request):
+    return render(request, "about.html")
+def contact(request):
+    return render(request, "contact.html")
+def leaderboard(request):
+    top_performances = Performance.objects.order_by('-score')[:10]
+    return render(request, 'leaderboard.html', {'top_performances': top_performances})
+# ==============================================
+# ===============================================================================================
 
-# def flip_card(request, card_id):
-#     card = Card.objects.get(pk=card_id)
 
-#     if not card.paired:
-#         card.paired = True
-#         card.save()
+# ===============================================================================================
+# second part are the ones of the far right of our nav bar
+# ==============================================
 
-#     return redirect("Memory.html")
+def inscription(request):
+    return render(request, "inscription.html")
+def connexion(request):
+    return render(request, "connexion.html")
 
-def MemoryGame(request):
-    cards = SetupCards()
-    rdm.shuffle(cards)
-    return render(request, "Memory.html", {f"cards": list(enumerate(cards))})
+# ==============================================
+# ===============================================================================================
 
-def SetupCards() -> list[Card]:
-    Card.objects.all().delete()
-    # makes a list composed of cards with the name meme0 through meme7 with 2 copies fo each
-    cards: list[Card] = [Card(f"meme{i}") for i in range(8)] + [Card(f"meme{i}") for i in range(8)]
-    # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
-    for card in cards:
-        card.save()
-    return cards
+
+
+# def DisplayUsers(request):
+#     items = Users.objects.all()
+#     return render(request, "DisplayUsers.html", {"users": items})
+
+
+
+
+
+
+# def memory_game(request):
+#     boxes = Box.objects.all()
+#     return render(request, 'game:memory_game.html',{'boxes':boxes})
+
+
+
 

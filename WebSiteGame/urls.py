@@ -22,3 +22,4 @@ urlpatterns = [
     path("", include("MyApp.urls"))
     # path("memory/", include("MyApp.urls"))
 ]
+
