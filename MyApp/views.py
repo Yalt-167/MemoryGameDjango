@@ -5,6 +5,9 @@ from .models import Users
 def Home(request):
     return render(request, "home.html")
 
+def connexion(request):
+    return render(request, "connexion.html")
+
 def DisplayUsers(request):
     items = Users.objects.all()
     return render(request, "DisplayUsers.html", {"users": items})

@@ -1,0 +1,53 @@
+<!-- fichier header séparer pour être utiliser sur différente pages -->
+<!-- recréation d'un head pour inclure à chaque fois le fichier style.css -->
+{% extends 'home.html' %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<header id="main-header">
+    <!-- logo du site mis en lien clickable pour ramener à l'index.php -->
+    <a href="index.php" class="main-header-links"><img src="./img/logo.png" alt="logo du site"></a>
+    <!-- Photo de profile si l'utilisateur n'est pas connecté -->
+    <!-- <a href="signUp.php" class="pfp"><img src="img/defaultPfp.jpg" alt="photo de profile" width="50%"></a> -->
+    <!-- bar de navigation avec les différents lien clickable -->
+
+
+
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Meme-ory</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNav"
+            aria-controls="navbarNav" aria-expanded="False" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <!-- elements on the far left -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">about</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'leaderboard' %}">classement</a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav ml-auto">
+                <!-- elements on the far right -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inscription' %}">inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'connexion'%}">connexion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+{% endblock %}
