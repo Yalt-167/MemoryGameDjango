@@ -1,12 +1,30 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from .models import Performance
 from django.views import View
 # from .models import Box
 # from .models import Users
 # Create your views here.
 # ===============================================================================================
+# Verifying the user's login info
+def login_user(request):
+    if request.method == "POST":
+        # Data in the database
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
+        mail = request.POST.get("mail", None)
+        user = authenticate(request, username=username, password=password, mail=mail)
 
+    # If the data is same in the database and in the connexion page redirecting toward  the next page
+        if user is not None:
+            login(request,user)
+            return redirect("Home")
+            # redirect vers Memory.html
+        else:
+            return redirect("connexion.html")
 
+    return render(request, 'connexion.html', {})
 # ===============================================================================================
 class Index(View):
     templatee = "index.html"
@@ -14,7 +32,6 @@ class Index(View):
     def get (self,request):
         return render(request,self.template)
     
-
 class Login(View):
     template = 'Login.html'
 
