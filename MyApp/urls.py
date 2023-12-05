@@ -15,6 +15,7 @@ urlpatterns = [
     path("connexion/",connexion, name ="connexion"),
     path("about/",about, name ="about"),
     path("contact/",contact, name ="contact"),
+    path("header/",lambda x : x, name ="header"),
 ]
 
 

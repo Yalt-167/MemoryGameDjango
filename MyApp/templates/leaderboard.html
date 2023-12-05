@@ -1,6 +1,5 @@
-<?php
-include_once('header.phtml');
-?>
+
+{%extends "header.html" %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +34,24 @@ include_once('header.phtml');
     </style>
 </head>
 <body>
-    <h1>miaou</h1>
+    <h1>Leaderboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Score</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for performance in top_performances %}
+                <tr>
+                    <td>{{ performance.user.username }}</td>
+                    <td>{{ performance.score }}</td>
+                    <td>{{ performance.date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
