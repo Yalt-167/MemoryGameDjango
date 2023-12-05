@@ -3,5 +3,4 @@ from django.db import models
 # Create your models here.
 
 class Card(models.Model):
-    link = models.URLField()
-    paired = models.BooleanField(default=False)
+    name: str = models.CharField(max_length=255, primary_key=True, default="")

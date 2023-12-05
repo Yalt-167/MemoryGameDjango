@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        #gameGrid {
+            display: grid;
+            grid-template-columns:  repeat(auto-fill, 100px); /* 1fr -> 1 fraction -> the elements are evenly spaced (taking 1/firstRepatArgument of the space available) */ 
+            gap: 20px; /* gap between grid items */
+            justify-content: center;
+        }
+
+        .gridItem {
+            padding: 20px;
+            text-align: center;
+            height: 100px;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id = "gameGrid">
+        {% for idx, card in cards %}
+        <div class = "memoryCard gridItem">
+            <div class = "flippedCard">
+                <img src = "{% static 'images/' %}cardBack.png" alt = "hilariousMeme({{ cards.name }})" width = "100px" id="{{ idx }}" onclick="FlipCard('{{ card.name }}', '{{ idx }}')">
+            </div>
+            <!-- "{% static 'images/' %}{{ card.name }}.png" -->
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        const cardBack = "/static/images/cardBack.png"
+        let rounds = 0;
+        let pairsFound = 0;
+        const PAIRSCOUNT = 8;
+        let flippedThatRound = [];
+        let timeoutIsActive = false;
+        log = console.log;
+        function FlipCard(cardName, cardIdx)
+        {
+            if (timeoutIsActive) { return; }
+            let card = document.getElementById(cardIdx);
+            let cardFrontReference = `/static/images/${cardName}.png`;
+            if (card.src !== cardBack) // if isn t already flipped
+            {
+                // Update the image s source
+                flippedThatRound.push(card);
+                card.src = cardFrontReference;
+    
+                if (flippedThatRound.length == 2)
+                {
+                    rounds++;
+                    if (flippedThatRound[0].src !== flippedThatRound[1].src) // if both flipped card are different
+                    {
+                        setTimeout(
+                            () => {
+                                ResetCards(flippedThatRound[0], flippedThatRound[1]),
+                                timeoutIsActive = false
+                                },
+                            1000
+                            )
+                        timeoutIsActive = true;
+                    }
+                    else
+                    {
+                        flippedThatRound[0].onclick = flippedThatRound[0].onclick = () => {}; // effectively erase the flip behaviour
+                        flippedThatRound = [];
+                        pairsFound++;
+                        if (PAIRSCOUNT === pairsFound)
+                        {
+                            // game won -> redirect to some page
+                        }
+                    }
+    
+                    
+                }
+                return;
+            }
+    
+            // card already flipped
+            
+        }
+    
+        function ResetCards(card1, card2)
+        {
+            log(`was called: rounds = ${rounds}`)
+            log(card1);
+            log(card2);
+            card1.src = card2.src = cardBack;
+            flippedThatRound = [];
+        }
+        
+    </script>
+
+</body>
+</html>
