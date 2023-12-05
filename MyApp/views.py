@@ -17,14 +17,3 @@ def MemoryGame(request):
     # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
     rdm.shuffle(cards)
     return render(request, "Memory.html", {f"cards": list(enumerate(cards))})
-
-# urlpatterns = [ # websitegame
-#     path('admin/', admin.site.urls),
-#     path("", include("MyApp.urls"))
-#     # path("memory/", include("MyApp.urls"))
-# ]
-
-# urlpatterns = [ #app
-#     path("", Home, name="Home"), # name -> associate a unique name to the path so u can refer to it using the name (in temlpates) or using reverse(name) (in regular python)
-#     path("Memory/", MemoryGame, name="Memory"),
-# ]

@@ -4,41 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game</title>
+    <title>Meme-Ory</title>
     <style>
-        #gameGrid {
-            display: grid;
-            grid-template-columns:  repeat(auto-fill, 100px); /* 1fr -> 1 fraction -> the elements are evenly spaced (taking 1/firstRepatArgument of the space available) */ 
-            gap: 20px; /* gap between grid items */
+        body {
+            display: flex;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
-        .gridItem {
-            padding: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 15px;
             text-align: center;
-            height: 100px;
             width: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 200px;
+        }
+
+        td:hover {
+            background-color: #f5f5f5;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
         }
     </style>
 </head>
 <body>
-    
-    <div id = "gameGrid">
+    <table>
+        <tr>  <!-- bc the if closes a tag and open a new one; open one first to avoid issues -->
+        <!-- <div id = "gameGrid"> -->
         {% for idx, card in cards %}
-        <div class = "memoryCard gridItem">
-            <div class = "flippedCard">
-                <img src = "{% static 'images/' %}cardBack.png" alt = "hilariousMeme({{ cards.name }})" width = "100px" id="{{ idx }}" onclick="FlipCard('{{ card.name }}', '{{ idx }}')">
-            </div>
-            <!-- "{% static 'images/' %}{{ card.name }}.png" -->
-        </div>
+            {% if idx|divisibleby:4 %} </tr><tr>{% endif %}
+                <td>
+                    <span>
+                        <span>
+                            <img src = "{% static 'images/' %}cardBack.png" alt = "hilariousMeme({{ cards.name }})" id="{{ idx }}" onclick="FlipCard('{{ card.name }}', '{{ idx }}')">
+                        </span>
+                    </span>
+                </td>
         {% endfor %}
-    </div>
+        <!-- </div> -->
+        </tr> <!-- same but closing  -->
+    </table>
 
     <script>
-        const cardBack = "/static/images/cardBack.png"
+
+        const cardBack = "/static/images/cardBack.png";
         let rounds = 0;
         let pairsFound = 0;
         const PAIRSCOUNT = 8;
@@ -55,7 +76,7 @@
             if (flippedThatRound.includes(card)) { return; }
 
             let cardFrontReference = `/static/images/${cardName}.png`;
-            if (card.src == cardBack) { return; } // if isn t already flipped
+            if (card.src == cardBack) { return; }
             
             // Update the image s source
             flippedThatRound.push(card);
@@ -94,7 +115,7 @@
     
         function ResetCards(card1, card2)
         {
-            log(`was called: rounds = ${rounds}`)
+            log(`was called: rounds = ${rounds}`);
             log(card1);
             log(card2);
             card1.src = card2.src = cardBack;
