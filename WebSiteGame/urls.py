@@ -21,6 +21,6 @@ from MyApp.admin import admin_site
 urlpatterns = [
     path('admin/', admin_site.urls),
     path("", include("MyApp.urls")),
-    path("members/", include("django.contrib.urls")),
-    path("members/", include("members.urls")),
+    path("login/", include("django.contrib.auth.urls")),
+    path("login/", include("login.urls")),
 ]
