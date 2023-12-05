@@ -33,6 +33,34 @@
     </style>
 </head>
 <body>
-    <h1>raordfhsdfhg</h1>
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">connexion</h3>
+        </div>
+        <div class="card-body">
+          <form method="post" class="form">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="id_username" class="form-label">pseudo:</label>
+              <input type="text" name="username" id="id_username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="id_password" class="form-label">MDP:</label>
+              <input type="password" name="password" id="id_password" class="form-control" required>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">connexion</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
 </body>
 </html>

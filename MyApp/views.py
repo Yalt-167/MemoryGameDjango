@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from .models import Performance
+from django.views import View
 # from .models import Box
 # from .models import Users
 # Create your views here.
@@ -7,11 +8,23 @@ from .models import Performance
 
 
 # ===============================================================================================
+class Index(View):
+    templatee = "index.html"
+
+    def get (self,request):
+        return render(request,self.template)
+    
+
+class Login(View):
+    template = 'Login.html'
+
+    def get(self,request):
+        return render(request,self.template)
+    
 
 
 
-
-# ===============================================================================================
+# ==============================================================================================
 # functions that allow for the site to work, they allow the display of the html 
 # first part are the ones of the far left of our nav bar
 # ==============================================
