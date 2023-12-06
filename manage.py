@@ -20,3 +20,12 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+# from MyApp.models import Box
+
+
+# for i in range(1,9):
+#     Box.objects.create(value=str(i))
+#     Box.objects.create(value=str(i))
