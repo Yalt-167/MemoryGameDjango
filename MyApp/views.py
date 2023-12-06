@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponse, redirect
 import random as rdm
 from .models import Performance
 from django.views import View
+from .Card import Card
 
 # Create your views here.
 # file where the differents pages are created
@@ -10,27 +11,6 @@ from django.views import View
 # -> the render enables us to pass arguments in the .html (as a JSON) making more dynamic pages possible
 
 
-class Card:
-    def __init__(self, name: str) -> None:
-        self.name: str = name
-
-# ===============================================================================================
-
-
-# ===============================================================================================
-class Index(View):
-    template = "index.html"
-
-    def get (self,request):
-        return render(request,self.template)
-    
-
-class Login(View):
-    template = 'Login.html'
-
-    def get(self,request):
-        return render(request,self.template)
-    
 
 
 
@@ -61,10 +41,25 @@ def inscription(request):
 def connexion(request):
     return render(request, "connexion.html")
 
-# ==============================================
+# ===============================================================================================
+class Index(View):
+    template = "index.html"
+
+    def get (self,request):
+        return render(request,self.template)
+    
+
+class Login(View):
+    template = 'Login.html'
+
+    def get(self,request):
+        return render(request,self.template)
+    
+
+
 # ===============================================================================================
 
-
+# Basically what handles the beginining (setup) and end (Results) of the game
 def MemoryGame(request):
     # list composed of cards with the name meme0 through meme7 with 2 copies fo each
     cards = [Card(f"meme{i}") for i in range(8)] + [Card(f"meme{i}") for i in range(8)]
