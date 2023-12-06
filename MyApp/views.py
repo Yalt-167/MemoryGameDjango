@@ -1,9 +1,8 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-
 from django.contrib import messages
-from .models import Performance
+from .models import Performance,SignUpForm
 from django.views import View
 # from .models import Box
 # from .models import Users
@@ -26,17 +25,17 @@ class Login(View):
 def sign_up(request):
 
     if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
 
-        username = request.POST["username"]
-        password = request.POST["password"]
-        email = request.POST["email"]
+        data = User.objects.create_user(username = username, email = email, password = password)
+        data.save()
 
-        user = User.objects.create_user(request,username = username ,email = email , password = password)
-        user.save()
-
-    return redirect(request, 'home.html')
+    return redirect(request,'inscription.html', {})
 
 def login_user(request):
+    
     if request.method == "POST":
         # Checking the data in the database
         username = request.POST.get("username", None)
