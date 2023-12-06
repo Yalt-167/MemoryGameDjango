@@ -17,3 +17,10 @@ def MemoryGame(request):
     # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
     rdm.shuffle(cards)
     return render(request, "Memory.html", {f"cards": list(enumerate(cards))})
+
+def ParseGameResults(request):
+    print("Total:", end=" ")
+    points: float = request.POST.get("totalPoints", None)
+    print(points)
+
+    return render(request, "home.html")

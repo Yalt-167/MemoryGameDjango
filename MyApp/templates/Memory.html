@@ -42,7 +42,6 @@
 <body>
     <table>
         <tr>  <!-- bc the if closes a tag and open a new one; open one first to avoid issues -->
-        <!-- <div id = "gameGrid"> -->
         {% for idx, card in cards %}
             {% if idx|divisibleby:4 %} </tr><tr>{% endif %}
                 <td>
@@ -53,22 +52,37 @@
                     </span>
                 </td>
         {% endfor %}
-        <!-- </div> -->
         </tr> <!-- same but closing  -->
     </table>
+
+    <form id="gameResultForm" method="post" action="{% url 'ParseGameResults' %}" style="display: none;">
+        {% csrf_token %}
+        <input type="hidden" id="totalPoints" name="totalPoints" value="" />
+        <button type="submit">Submit</button>
+    </form>
 
     <script>
 
         const cardBack = "/static/images/cardBack.png";
-        let rounds = 0;
+        const TIMEPOINTCOEFFICIENT = 1; // 1 so far but idek
+        const ROUNDCOUNTPOINTCOEFFICIENT = 1; // 1 so far but idek
+        let roundsCount = 0;
         let pairsFound = 0;
         const PAIRSCOUNT = 8;
         let flippedThatRound = [];
         let timeoutIsActive = false;
         log = console.log;
 
+        let startingTime = null;
+        
+
         function FlipCard(cardName, cardIdx)
         {
+            if (startingTime === null)
+            {
+                startingTime = Date.now(); // time in ms
+            }
+
             if (timeoutIsActive) { return; }
 
             let card = document.getElementById(cardIdx);
@@ -84,7 +98,7 @@
 
             if (flippedThatRound.length == 2)
             {
-                rounds++;
+                roundsCount++;
                 if (flippedThatRound[0].src !== flippedThatRound[1].src) // if both flipped card are different
                 {
                     setTimeout(
@@ -98,12 +112,12 @@
                 }
                 else
                 {
-                    flippedThatRound[0].onclick = flippedThatRound[0].onclick = () => {}; // effectively erase the flip behaviour
+                    flippedThatRound[0].onclick = flippedThatRound[1].onclick = () => {}; // effectively erase the flip behaviour
                     flippedThatRound = [];
                     pairsFound++;
                     if (PAIRSCOUNT == pairsFound)
                     {
-                        // game won -> redirect to some page
+                        EndGame();
                     }
                 }
             }
@@ -115,13 +129,24 @@
     
         function ResetCards(card1, card2)
         {
-            log(`was called: rounds = ${rounds}`);
+            log(`was called: roundsCount = ${roundsCount}`);
             log(card1);
             log(card2);
             card1.src = card2.src = cardBack;
             flippedThatRound = [];
         }
-        
+
+        function EndGame()
+        {
+            setTimeout(
+                () => {
+                    document.getElementById('totalPoints').value = (Date.now() - startingTime) / 1000 * TIMEPOINTCOEFFICIENT + roundsCount * ROUNDCOUNTPOINTCOEFFICIENT;
+                    document.getElementById('gameResultForm').submit();
+                },
+                1500
+            )
+        }
+
     </script>
 
 </body>
