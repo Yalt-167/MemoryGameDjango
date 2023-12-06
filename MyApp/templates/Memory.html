@@ -4,87 +4,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game</title>
+    <title>Meme-Ory</title>
     <style>
-        #gameGrid {
-            display: grid;
-            grid-template-columns:  repeat(auto-fill, 100px); /* 1fr -> 1 fraction -> the elements are evenly spaced (taking 1/firstRepatArgument of the space available) */ 
-            gap: 20px; /* gap between grid items */
+        body {
+            display: flex;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
-        .gridItem {
-            padding: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 15px;
             text-align: center;
-            height: 100px;
             width: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 200px;
+        }
+
+        td:hover {
+            background-color: #f5f5f5;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
         }
     </style>
 </head>
 <body>
-    
-    <div id = "gameGrid">
+    <table>
+        <tr>  <!-- bc the if closes a tag and open a new one; open one first to avoid issues -->
         {% for idx, card in cards %}
-        <div class = "memoryCard gridItem">
-            <div class = "flippedCard">
-                <img src = "{% static 'images/' %}cardBack.png" alt = "hilariousMeme({{ cards.name }})" width = "100px" id="{{ idx }}" onclick="FlipCard('{{ card.name }}', '{{ idx }}')">
-            </div>
-            <!-- "{% static 'images/' %}{{ card.name }}.png" -->
-        </div>
+            {% if idx|divisibleby:4 %} </tr><tr>{% endif %}
+                <td>
+                    <span>
+                        <span>
+                            <img src = "{% static 'images/' %}cardBack.png" alt = "hilariousMeme({{ cards.name }})" id="{{ idx }}" onclick="FlipCard('{{ card.name }}', '{{ idx }}')">
+                        </span>
+                    </span>
+                </td>
         {% endfor %}
-    </div>
+        </tr> <!-- same but closing  -->
+    </table>
+
+    <form id="gameResultForm" method="post" action="{% url 'ParseGameResults' %}" style="display: none;">
+        {% csrf_token %}
+        <input type="hidden" id="totalPoints" name="totalPoints" value="" />
+        <button type="submit">Submit</button>
+    </form>
 
     <script>
-        const cardBack = "/static/images/cardBack.png"
-        let rounds = 0;
+
+        const cardBack = "/static/images/cardBack.png";
+        const TIMEPOINTCOEFFICIENT = 1; // 1 so far but idek
+        const ROUNDCOUNTPOINTCOEFFICIENT = 1; // 1 so far but idek
+        let roundsCount = 0;
         let pairsFound = 0;
         const PAIRSCOUNT = 8;
         let flippedThatRound = [];
         let timeoutIsActive = false;
         log = console.log;
+
+        let startingTime = null;
+        
+
         function FlipCard(cardName, cardIdx)
         {
-            if (timeoutIsActive) { return; }
-            let card = document.getElementById(cardIdx);
-            let cardFrontReference = `/static/images/${cardName}.png`;
-            if (card.src !== cardBack) // if isn t already flipped
+            if (startingTime === null)
             {
-                // Update the image s source
-                flippedThatRound.push(card);
-                card.src = cardFrontReference;
-    
-                if (flippedThatRound.length == 2)
-                {
-                    rounds++;
-                    if (flippedThatRound[0].src !== flippedThatRound[1].src) // if both flipped card are different
-                    {
-                        setTimeout(
-                            () => {
-                                ResetCards(flippedThatRound[0], flippedThatRound[1]),
-                                timeoutIsActive = false
-                                },
-                            1000
-                            )
-                        timeoutIsActive = true;
-                    }
-                    else
-                    {
-                        flippedThatRound[0].onclick = flippedThatRound[0].onclick = () => {}; // effectively erase the flip behaviour
-                        flippedThatRound = [];
-                        pairsFound++;
-                        if (PAIRSCOUNT === pairsFound)
-                        {
-                            // game won -> redirect to some page
-                        }
-                    }
-    
-                    
-                }
-                return;
+                startingTime = Date.now(); // time in ms
             }
+
+            if (timeoutIsActive) { return; }
+
+            let card = document.getElementById(cardIdx);
+
+            if (flippedThatRound.includes(card)) { return; }
+
+            let cardFrontReference = `/static/images/${cardName}.png`;
+            if (card.src == cardBack) { return; }
+            
+            // Update the image s source
+            flippedThatRound.push(card);
+            card.src = cardFrontReference;
+
+            if (flippedThatRound.length == 2)
+            {
+                roundsCount++;
+                if (flippedThatRound[0].src !== flippedThatRound[1].src) // if both flipped card are different
+                {
+                    setTimeout(
+                        () => {
+                            ResetCards(flippedThatRound[0], flippedThatRound[1]),
+                            timeoutIsActive = false
+                            },
+                        1000
+                        )
+                    timeoutIsActive = true;
+                }
+                else
+                {
+                    flippedThatRound[0].onclick = flippedThatRound[1].onclick = () => {}; // effectively erase the flip behaviour
+                    flippedThatRound = [];
+                    pairsFound++;
+                    if (PAIRSCOUNT == pairsFound)
+                    {
+                        EndGame();
+                    }
+                }
+            }
+
     
             // card already flipped
             
@@ -92,13 +129,24 @@
     
         function ResetCards(card1, card2)
         {
-            log(`was called: rounds = ${rounds}`)
+            log(`was called: roundsCount = ${roundsCount}`);
             log(card1);
             log(card2);
             card1.src = card2.src = cardBack;
             flippedThatRound = [];
         }
-        
+
+        function EndGame()
+        {
+            setTimeout(
+                () => {
+                    document.getElementById('totalPoints').value = (Date.now() - startingTime) / 1000 * TIMEPOINTCOEFFICIENT + roundsCount * ROUNDCOUNTPOINTCOEFFICIENT;
+                    document.getElementById('gameResultForm').submit();
+                },
+                1500
+            )
+        }
+
     </script>
 
 </body>

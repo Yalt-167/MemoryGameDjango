@@ -1,10 +1,10 @@
 from django.contrib import admin
-# from .models import Users
-from .models import Performance
-# from .models import Box
 
+from .models import UserProfile, UserHistory
+from .models import Performance
 # Register your models here.
 
-# admin.site.register(Users)
-# admin.site.register(Box)
+admin.site.register(UserProfile)
+admin.site.register(UserHistory)
 admin.site.register(Performance)
+
