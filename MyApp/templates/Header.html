@@ -83,23 +83,25 @@
                 
                 <ul class="navbar-nav ml-auto">
                     <!-- elements on the far right -->
+                    {% if user.is_authenticated %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'Login'%}">Connexion</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'Logout'%}">Deconnexion</a>
+                        </li>
+                    
+                    {% endif %}
+
 
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{% url 'SignUp' %}">Inscription</a>
                     </li>
                     
                     
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'Logout'%}">Deconnexion</a>
-                        </li>   
-                        <!-- Add authenticated user content here -->
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'Login'%}">Connexion</a>
-                        </li>
-                        <!-- Add guest user content here -->
-                    {% endif %}
+                    
                     
                 </ul>
             </div>
