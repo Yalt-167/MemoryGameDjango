@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models hedre
 
 class UserHistory(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=User("defaultUser", ))
     date = models.DateTimeField(auto_now_add=True, primary_key=True)
     score = models.IntegerField(default=0)
 

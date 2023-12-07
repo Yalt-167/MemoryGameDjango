@@ -18,10 +18,9 @@ import datetime
 def SignUp(request):
 
     if request.method == "POST":
-        username = request.POST.get("username", None)
-        email = request.POST.get("email", None)
-        password = request.POST.get("password", None)
-
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
