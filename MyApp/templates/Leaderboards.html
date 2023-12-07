@@ -44,11 +44,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% for performance in top_performances %}
+                {% for Score in Score %}
                     <tr>
-                        <td>{{ performance.user.username }}</td>
-                        <td>{{ performance.score }}</td>
-                        <td>{{ performance.date }}</td>
+                        <td>{{ score.user }}</td>
+                        <td>{{ score.score_value }}</td>
+                        <td>{{ score.timestamp }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
