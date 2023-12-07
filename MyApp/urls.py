@@ -1,5 +1,6 @@
 from django.contrib import admin
 from MyApp import views
+from MyApp.views import sign_up
 from django.urls import path
 # from .views import Home
 # from .views import leaderboard
@@ -12,6 +13,7 @@ from django.urls import path
 
 urlpatterns = [
     path("", views.HomePage, name="Home"),
+    path("../", views.HomePageFromElseWhere, name="HomeFromElsewhere"),
     # path("", views.DisplayUsers, name="DisplayUsers"),
     path("leaderboard/", views.LeaderboardPage, name="leaderboard"),
     # path("inscription/",views.inscription, name ="inscription"),
@@ -21,7 +23,7 @@ urlpatterns = [
     path("header/",lambda x : x, name ="header"),
     # path('', views.Index.as_view(), name='index'),
     path('Login/', views.login_user, name='login'),
-    path('inscription/', views.sign_up, name='sign_up'),
+    path('SignUp/', sign_up, name='sign_up'),
 ]
 
 

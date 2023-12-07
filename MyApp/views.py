@@ -24,15 +24,20 @@ class Login(View):
 
 def sign_up(request):
     print("Blablabla")
+
     if request.method == "POST":
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
 
-        data = User.objects.create_user(username = username, email = email, password = password)
-        data.save()
-        print("j'aime les pommes de terre")
-
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            print("User created successfully")
+            return redirect("http://127.0.0.1:8000/about/")
+        except Exception as e:
+            print(f"Error creating user: {e}")
+    	
     return render(request,'SignUp.html', {})
 
 # Login
@@ -59,6 +64,10 @@ def login_user(request):
 
 def HomePage(request):
     return render(request, "home.html")
+
+def HomePageFromElseWhere(request):
+    return render(request, "../home.html")
+
 def AboutPage(request):
     return render(request, "about.html")
 def ContactPage(request):
