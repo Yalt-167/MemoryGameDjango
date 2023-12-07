@@ -18,4 +18,3 @@ class Score(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score_value = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
-    timestamp = models.DateTimeField(auto_now_add=True)

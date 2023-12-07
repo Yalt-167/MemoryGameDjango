@@ -11,25 +11,7 @@
         <title>Meme-ory Game</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Memory Game</title>
         <style>
-            .grid {
-                display: grid;
-                grid-template-columns: repeat(4, 100px);
-                gap: 10px;
-            }
-
-            .box {
-                width: 100px;
-                height: 100px;
-                background-color: #e0e0e0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 18px;
-                cursor: pointer;
-            }
             
         </style>
     </head>
@@ -38,19 +20,17 @@
         <table>
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Score</th>
-                    <th>Date</th>
+                    <th>Username</th>&#9;
+                    <th>Score</th>&#9;
+                    <th>Date</th>&#9;
                 </tr>
             </thead>
             <tbody>
-                {% for Score in Score %}
-                    <tr>
-                        <td>{{ score.user }}</td>
-                        <td>{{ score.score_value }}</td>
-                        <td>{{ score.timestamp }}</td>
-                    </tr>
-                {% endfor %}
+            {% for score in topScores %}
+                <tr><td>{{ score.user }}</td></tr><br>
+                <tr><td>{{ score.score_value }}</td></tr><br>
+                <tr><td>{{ score.timestamp }}</td></tr><br>
+            {% endfor %}
             </tbody>
         </table>
     </body>
