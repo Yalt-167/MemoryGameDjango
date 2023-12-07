@@ -31,7 +31,8 @@
         body {
             background: url('left-background-image.jpg') left repeat-y, url('right-background-image.jpg') right repeat-y;
             background-size: auto 100%;
-            background-attachment: fixed;            
+            background-attachment: fixed;   
+            zoom: 175%;       
         }
         .content-container {
             border-left: 175px solid rgba(0, 0, 0, 0.897);
@@ -39,6 +40,84 @@
             background-color: rgba(255, 255, 255, 0.897);
             min-height: calc(100vh - 56px - 56px); /* Set the minimum height to fill the remaining space */
         }
+        .nav .nav-item {
+            animation: fadeInUp 0.4s ease-in-out;
+        }
+
+        .nav .nav-item:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .nav .nav-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .nav .nav-item:nth-child(3),
+        .nav .nav-item:nth-child(4),
+        .nav .nav-item:nth-child(5),
+        .nav .nav-item:nth-child(6) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+/* Add similar rules for other buttons if needed */
+
+        .bn13 {
+            display: inline-block;
+            padding: 0.65em 1.6em;
+            border: 3px solid #ffffff;
+            margin: 0 0.3em 0.3em 0;
+            border-radius: 0.12em;
+            box-sizing: border-box;
+            text-decoration: none;
+            font-family: "Roboto", sans-serif;
+            font-weight: 300;
+            color: #ffffff;
+            text-align: center;
+            transition: all 0.2s;
+            animation: bn13bouncy 5s infinite linear;
+            position: relative;
+        }
+
+        .bn13:hover {
+            background-color: white;
+            color: #000000;
+        }
+
+        @keyframes bn13bouncy {
+        0% {
+            top: 0em;
+        }
+        40% {
+            top: 0em;
+        }
+        43% {
+            top: -0.9em;
+        }
+        46% {
+            top: 0em;
+        }
+        48% {
+            top: -0.4em;
+        }
+        50% {
+            top: 0em;
+        }
+        100% {
+            top: 0em;
+        }
+        }
+
         
 
 
@@ -60,7 +139,7 @@
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color:rgba(0, 0, 0, 0.897);">
             <a href="{% url 'Home' %}"width="150"><img src="{% static 'images/' %}LogoSite.png" alt="logo du site" width="150" ></a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNav"
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="False" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -68,36 +147,39 @@
                 <ul class="navbar-nav mr-auto">
                     <!-- elements on the far left -->
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'Home' %}" >About</a>
+                        <a class="bn13 " href="{% url 'Home' %}">Home</a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a class="bn13" href="{% url 'Leaderboards' %}">Classement</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'Contact' %}">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'Leaderboards' %}">Classement</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'Us' %}">Who we are ?</a>
+                        <a class="bn13" href="{% url 'Us' %}">Who we are ?</a>
                     </li>
                 </ul>
-                
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="bn13" href = "{% url 'MemoryGame' %}">Play Meme-ory</a>
+                        </li>
+                </div>   
                 <ul class="navbar-nav ml-auto">
                     <!-- elements on the far right -->
                     {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="bn13" href="{% url 'Logout'%}">Deconnexion</a>
+                        </li>
                         
+                        {% else %}
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'Login'%}">Connexion</a>
+                            <a class="bn13" href="{% url 'Login'%}">Connexion</a>
                         </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'Logout'%}">Deconnexion</a>
-                        </li>
-                    
+                        
                     {% endif %}
 
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'SignUp' %}">Inscription</a>
+                        <a class="bn13" href="{% url 'SignUp' %}">Inscription</a>
                     </li>
                     
                     
@@ -110,8 +192,6 @@
     <div class="content-container">
         
         {% block content %}
-        ohaiyo
-        <!-- Your specific page content goes here -->
         {% endblock %}
         
     </div>

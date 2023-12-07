@@ -1,36 +1,89 @@
 {%extends "header.html" %}
-
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-        <title>Meme-ory Game</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <a href = "{% url 'MemoryGame' %}">Play Meme-Ory</a>
-    </body>
-</html> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
 
+        .container {
+            margin-top: 50px;
+        }
 
+        h1 {
+            color: #007bff;
+        }
+
+        p {
+            font-size: 18px;
+        }
+        .cadre {
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 1em;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            color: #ffffff;
+            display: inline-block;
+            padding: 10px 40px 10px 40px;
+            position: relative;
+            border: 5px solid #ffffff;
+            border-radius: 20px;
+            }
+    </style>
+</head>
 <body>
 
-
     <div class="container">
-        {% block content %}{% endblock %}
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <br><br><br><br>
+                <h1 class="text-center">Welcome to the Memory Game!</h1>
+                <br><br><br><br>
+                <p>
+                    Memory Game is a classic card matching game where the goal is to find all matching pairs of cards.
+                    <br>
+                    Here's how to play:
+                </p>
+                <br>
+                <ol>
+                    <a class="cadre"> 1. Click on a card to reveal its content.</a>
+                    <br>
+                    
+                    <br>
+                    <a class="cadre"> 2. Click on another card to try to find its matching pair.</a>
+                    <br>
+
+                    <br>
+                    <a class="cadre"> 3. If the two cards match, they will remain open. If not, they will flip back.</a>
+                    <br>
+
+                    <br>
+                    <a class="cadre"> 4. Continue until all pairs are matched.</a>
+                </ol>
+                <br>
+
+                <p>
+                    The game requires concentration and a good memory to succeed. Enjoy playing and have fun!
+                </p>
+                <br>
+
+                <p>
+                    Ready to start? <a href="{% url 'MemoryGame' %}">Play Now!</a>
+                </p>
+            </div>
+        </div>
     </div>
 
-    <script src="https://code.jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
-    <!-- <div class="grid">
-        {% for box in boxes %}
-        <div class="box" data-value="{{ box.value }}">{{ box.value }}</div>
-        {% endfor %}
-    </div> -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
+{% endblock %}

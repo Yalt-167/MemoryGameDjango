@@ -89,8 +89,10 @@ def LeaderboardPage(request):
 
 
 # Basically what handles the beginining (setup) and end (Results) of the game
-@login_required
+
 def MemoryGame(request):
+    if not request.user.is_authenticated:
+        return LoginPage(request)
     # list composed of cards with the name meme0 through meme7 with 2 copies fo each
     cards = [Card(f"meme{i}") for i in range(8)] + [Card(f"meme{i}") for i in range(8)]
     # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
