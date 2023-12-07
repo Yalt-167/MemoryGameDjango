@@ -16,21 +16,10 @@ from django.contrib.auth.decorators import login_required
 # from .models import Users
 # Verifying the user's login info
 
-class Index(View):
-    template = "index.html"
-
-    def get (self,request):
-        return render(request,self.template)
-    
-class Login(View):
-    template = 'Login.html'
-    def get(self,request):
-        return render(request,self.template)
-
 # functions that allow for the site to work, they allow the display of the html 
 # first part are the ones of the far left of our nav bar
 
-def sign_up(request):
+def SignUp(request):
     print("Blablabla")
 
     if request.method == "POST":
@@ -46,10 +35,9 @@ def sign_up(request):
         except Exception as e:
             print(f"Error creating user: {e}")
     	
-    return render(request,'SignUp.html', {})
+    return SignUpPage(request)
 
-# Login
-def login_user(request):
+def Login(request):
     
     if request.method == "POST":
         # Checking the data in the database
@@ -67,10 +55,9 @@ def login_user(request):
             messages.success(request, ("Identifiant ou mot de passe incorrect"))
             return ContactPage(request)
     else:
-        return ConnectionPage(request)
+        return LoginPage(request)
 
-
-def LogOut(request):
+def Logout(request):
     print("signout was called")
     if request.user.is_authenticated:
         logout(request)
@@ -79,50 +66,32 @@ def LogOut(request):
 
 
 def HomePage(request):
-    return render(request, "home.html")
+    return render(request, "Home.html")
 
 def HomePageFromElseWhere(request):
-    return render(request, "../home.html")
-
-def AboutPage(request):
-    return render(request, "about.html")
-def ContactPage(request):
-    return render(request, "Contact.html")
-def LeaderboardPage(request):
-    top_performances = Performance.objects.order_by('-score')[:10]
-    print(top_performances)
-    return render(request, 'leaderboard.html', {'top_performances': top_performances})
+    return render(request, "../Home.html")
 
 # second part are the ones of the far right of our nav bar
 
-def InscriptionPage(request):
+def SignUpPage(request):
     return render(request, "SignUp.html")
 
-def ConnectionPage(request):
+def LoginPage(request):
     return render(request, "Login.html")
 
 
 def AboutPage(request):
-    return render(request, "about.html")
+    return render(request, "About.html")
 
 def ContactPage(request):
-    return render(request, "contact.html")
+    return render(request, "Contact.html")
 
 def LeaderboardPage(request):
-    top_performances = Performance.objects.order_by("-score")[:10]
-    return render(request, "leaderboard.html", {"top_performances": top_performances})
 
-# ===============================================================================================
-# second part are the ones of the far right of our nav bar
-# ==============================================
+    top_performances = list(Performance.objects.order_by("-score"))[:10]
+    print(top_performances)
+    return render(request, "Leaderboards.html", {"top_performances": top_performances})
 
-# def SignUpPage(request):
-#     return render(request, "SignUp.html")
-
-# def LoginPage(request):
-#     return render(request, "Login.html")
-
-# # ===============================================================================================
 
 # def SignUp(request):
 #     print("signup was called")
@@ -181,6 +150,8 @@ def LeaderboardPage(request):
 # Basically what handles the beginining (setup) and end (Results) of the game
 @login_required
 def MemoryGame(request):
+    if not request.user.is_authentificated: return HomePage(request)
+
     # list composed of cards with the name meme0 through meme7 with 2 copies fo each
     cards = [Card(f"meme{i}") for i in range(8)] + [Card(f"meme{i}") for i in range(8)]
     # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
