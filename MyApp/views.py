@@ -84,7 +84,7 @@ def LoginPage(request):
     return render(request, "Login.html")
 
 def LeaderboardPage(request):
-    top_performances = Score.objects.order_by("-score")[:10]
+    top_performances = Score.objects.order_by("-value")[:10]
     return render(request, "Leaderboards.html", {"top_performances": top_performances})
 
 
