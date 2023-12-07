@@ -1,9 +1,11 @@
 from django.contrib import admin
-from .models import User
-from .models import Performance
-# from .models import Box
+
+from .models import UserProfile, UserHistory
 
 
-# Register your models here.
-# admin.site.register(Box)
-admin.site.register(Performance)
+# Register your models here. -> allow us to access it from the admin panel
+
+admin.site.register(UserProfile)
+admin.site.register(UserHistory)
+
+

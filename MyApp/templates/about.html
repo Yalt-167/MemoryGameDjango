@@ -1,8 +1,6 @@
-
-{%extends "header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -36,25 +34,18 @@
         </style>
     </head>
     <body>
-        <h1>Leaderboard</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Score</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for Score in Score %}
-                    <tr>
-                        <td>{{ score.user }}</td>
-                        <td>{{ score.score_value }}</td>
-                        <td>{{ score.timestamp }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+        <h1>raor</h1>
+        
+        
+        {% if user.is_authenticated %}
+            Hi {{ user.username }}!
+        <p><a href="{% url 'LogOut' %}">Log Out</a></p>
+        {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">Log In</a>
+        {% endif %}
+        
     </body>
 </html>
 {% endblock %}

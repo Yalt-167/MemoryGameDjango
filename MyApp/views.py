@@ -2,12 +2,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Performance
+from .models import Score
 from django.views import View
-from .models import TeamMember
-# from .models import Box
-# from .models import Users
-# Verifying the user's login info
+from django.shortcuts import render, HttpResponse, redirect
+import random as rdm
+from .models import User   
+from django.views import View
+from .Card import Card
+from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 class Index(View):
     template = "index.html"
@@ -25,15 +29,20 @@ class Login(View):
 
 def sign_up(request):
     print("Blablabla")
+
     if request.method == "POST":
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
 
-        data = User.objects.create_user(username = username, email = email, password = password)
-        data.save()
-        print("j'aime les pommes de terre")
-
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            print("User created successfully")
+            return redirect("http://127.0.0.1:8000/about/")
+        except Exception as e:
+            print(f"Error creating user: {e}")
+    	
     return render(request,'SignUp.html', {})
 
 # Login
@@ -58,10 +67,21 @@ def login_user(request):
         return ConnectionPage(request)
 
 
+def LogOut(request):
+    print("signout was called")
+    if request.user.is_authenticated:
+        logout(request)
+        print("got through signout")
+    return redirect("http://127.0.0.1:8000/about/")
+
 def HomePage(request):
-    return render(request, "Home.html")
-# def AboutPage(request):
-#     return render(request, "about.html")
+    return render(request, "home.html")
+
+def HomePageFromElseWhere(request):
+    return render(request, "../home.html")
+
+def AboutPage(request):
+    return render(request, "about.html")
 def ContactPage(request):
     return render(request, "Contact.html")
 def LeaderboardPage(request):
@@ -76,9 +96,32 @@ def InscriptionPage(request):
 
 def ConnectionPage(request):
     return render(request, "Login.html")
-def UsPage(request):
-    return render(request, "Us.html")
 
-def team_page(request):
-    team_members = TeamMember.objects.all()
-    return render(request, 'team/team_page.html', {'team_members': team_members})
+
+def AboutPage(request):
+    return render(request, "about.html")
+
+def ContactPage(request):
+    return render(request, "contact.html")
+
+def LeaderboardPage(request):
+    top_performances = Performance.objects.order_by("-score")[:10]
+    return render(request, "leaderboard.html", {"top_performances": top_performances})
+
+
+# Basically what handles the beginining (setup) and end (Results) of the game
+@login_required
+def MemoryGame(request):
+    # list composed of cards with the name meme0 through meme7 with 2 copies fo each
+    cards = [Card(f"meme{i}") for i in range(8)] + [Card(f"meme{i}") for i in range(8)]
+    # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
+    rdm.shuffle(cards)
+    return render(request, "Memory.html", {f"cards": list(enumerate(cards))})
+
+def ParseGameResults(request):
+  
+    print("Total:", end=" ")
+    points: float = request.POST.get("totalPoints", None)
+    print(points)
+
+    return HomePage(request)
