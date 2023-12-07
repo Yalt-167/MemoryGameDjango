@@ -24,4 +24,4 @@ class Score(models.Model):
     player_name = models.CharField(max_length=100)
     score_value = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
-  
+    timestamp = models.DateTimeField(auto_now_add=True)

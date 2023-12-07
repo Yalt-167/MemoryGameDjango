@@ -1,6 +1,7 @@
 <!-- fichier header séparer pour être utiliser sur différente pages -->
 <!-- recréation d'un head pour inclure à chaque fois le fichier style.css -->
 {% block header_ %}
+{% load static %}
 <head>
     <link rel="stylesheet" href="./css/style.css">
     <meta charset="UTF-8">
@@ -27,55 +28,90 @@
             font-size: 18px;
             cursor: pointer;
         }
+        body {
+            background: url('left-background-image.jpg') left repeat-y, url('right-background-image.jpg') right repeat-y;
+            background-size: auto 100%;
+            background-attachment: fixed;            
+        }
+        .content-container {
+            border-left: 175px solid rgba(0, 0, 0, 0.897);
+            border-right: 175px solid rgba(0, 0, 0, 0.897);
+            background-color: rgba(255, 255, 255, 0.897);
+            min-height: calc(100vh - 56px - 56px); /* Set the minimum height to fill the remaining space */
+        }
         
+
+
     </style>
-</head>
-<header id="main-header">
-    <!-- logo du site mis en lien clickable pour ramener à l'index.php -->
-    <a href="index.php" class="main-header-links"><img src="./img/logo.png" alt="logo du site"></a>
-    <!-- Photo de profile si l'utilisateur n'est pas connecté -->
-    <!-- <a href="signUp.php" class="pfp"><img src="img/defaultPfp.jpg" alt="photo de profile" width="50%"></a> -->
-    <!-- bar de navigation avec les différents lien clickable -->
-
-
 
     
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Meme-ory</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNav"
-            aria-controls="navbarNav" aria-expanded="False" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <!-- elements on the far left -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#">home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'About' %}">about</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Contact' %}">contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Leaderboards' %}">classement</a>
-                </li>
-            </ul>
-            
-            <ul class="navbar-nav ml-auto">
-                <!-- elements on the far right -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'SignUp' %}">inscription</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Login'%}">connexion</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
-{% endblock %}
-{% block content %}
-    azertyuiop
+</head>
+<body>
+    <header id="main-header">
+        <!-- logo du site mis en lien clickable pour ramener à l'index.php -->
+        
+        <!-- Photo de profile si l'utilisateur n'est pas connecté -->
+        <!-- <a href="signUp.php" class="pfp"><img src="img/defaultPfp.jpg" alt="photo de profile" width="50%"></a> -->
+        <!-- bar de navigation avec les différents lien clickable -->
+
+
+
+        
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color:rgba(0, 0, 0, 0.897);">
+            <a href="{% url 'Home' %}"width="150"><img src="{% static 'images/' %}LogoSite.png" alt="logo du site" width="150" ></a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNav"
+                aria-controls="navbarNav" aria-expanded="False" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <!-- elements on the far left -->
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'Home' %}" >about</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'contact' %}">contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'leaderboard' %}">classement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'Us' %}">Who we are ?</a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav ml-auto">
+                    <!-- elements on the far right -->
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'sign_up' %}">inscription</a>
+                    </li>
+                    
+                    
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'login'%}">deconnexion</a>
+                        </li>   
+                        <!-- Add authenticated user content here -->
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'login'%}">connexion</a>
+                        </li>
+                        <!-- Add guest user content here -->
+                    {% endif %}
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="content-container">
+        
+        {% block content %}
+        ohaiyo
+        <!-- Your specific page content goes here -->
+        {% endblock %}
+        
+    </div>
+</body>
 {% endblock %}
