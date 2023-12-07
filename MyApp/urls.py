@@ -11,13 +11,13 @@ from django.urls import path
 
 
 urlpatterns = [
-    path("", views.Home, name="Home"),
+    path("", views.HomePage, name="Home"),
     # path("", views.DisplayUsers, name="DisplayUsers"),
-    path("leaderboard/", views.leaderboard, name="leaderboard"),
-    path("inscription/",views.inscription, name ="inscription"),
+    path("leaderboard/", views.LeaderboardPage, name="leaderboard"),
+    # path("inscription/",views.inscription, name ="inscription"),
     # path("connexion/",connexion, name ="connexion"),
-    path("about/",views.about, name ="about"),
-    path("contact/",views.contact, name ="contact"),
+    path("about/",views.AboutPage, name ="about"),
+    path("contact/",views.ContactPage, name ="contact"),
     path("header/",lambda x : x, name ="header"),
     # path('', views.Index.as_view(), name='index'),
     path('Login/', views.login_user, name='login'),

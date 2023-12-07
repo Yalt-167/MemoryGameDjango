@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Performance,SignUpForm
+from .models import Performance
 from django.views import View
 # from .models import Box
 # from .models import Users
@@ -23,7 +23,7 @@ class Login(View):
 # first part are the ones of the far left of our nav bar
 
 def sign_up(request):
-
+    print("Blablabla")
     if request.method == "POST":
         username = request.POST['username']
         email = request.POST['email']
@@ -31,9 +31,11 @@ def sign_up(request):
 
         data = User.objects.create_user(username = username, email = email, password = password)
         data.save()
+        print("j'aime les pommes de terre")
 
-    return redirect(request,'inscription.html', {})
+    return render(request,'SignUp.html', {})
 
+# Login
 def login_user(request):
     
     if request.method == "POST":
@@ -46,37 +48,30 @@ def login_user(request):
     # If the data is same in the database and in the connexion page redirecting toward  the next page
         if user is not None:
             login(request,user)
-            return redirect("../about/")
+            return AboutPage(request)
             # redirect vers Memory.html
         else:
             messages.success(request, ("Identifiant ou mot de passe incorrect"))
-            return redirect("contact")
+            return ContactPage(request)
     else:
-        return render(request, 'Login.html', {})
+        return ConnectionPage(request)
 
 
-def Home(request):
+def HomePage(request):
     return render(request, "home.html")
-def about(request):
+def AboutPage(request):
     return render(request, "about.html")
-def contact(request):
-    return render(request, "contact.html")
-def leaderboard(request):
+def ContactPage(request):
+    return render(request, "Contact.html")
+def LeaderboardPage(request):
     top_performances = Performance.objects.order_by('-score')[:10]
+    print(top_performances)
     return render(request, 'leaderboard.html', {'top_performances': top_performances})
 
 # second part are the ones of the far right of our nav bar
 
-def inscription(request):
-    return render(request, "inscription.html")
+def InscriptionPage(request):
+    return render(request, "SignUp.html")
 
-def connexion(request):
-    return render(request, "connexion.html")
-
-# def DisplayUsers(request):
-#     items = Users.objects.all()
-#     return render(request, "DisplayUsers.html", {"users": items})
-
-# def memory_game(request):
-#     boxes = Box.objects.all()
-#     return render(request, 'game:memory_game.html',{'boxes's:boxes})
+def ConnectionPage(request):
+    return render(request, "Login.html")
