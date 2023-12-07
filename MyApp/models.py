@@ -17,3 +17,12 @@ class Score(models.Model):
     player_name = models.CharField(max_length=100)
     score_value = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class TeamMember(models.Model):
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=50)
+    bio = models.TextField()
+
+    def __str__(self):
+        return self.name

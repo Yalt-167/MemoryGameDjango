@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Performance
 from django.views import View
+from .models import TeamMember
 # from .models import Box
 # from .models import Users
 # Verifying the user's login info
@@ -48,7 +49,7 @@ def login_user(request):
     # If the data is same in the database and in the connexion page redirecting toward  the next page
         if user is not None:
             login(request,user)
-            return AboutPage(request)
+            return HomePage(request)
             # redirect vers Memory.html
         else:
             messages.success(request, ("Identifiant ou mot de passe incorrect"))
@@ -58,9 +59,9 @@ def login_user(request):
 
 
 def HomePage(request):
-    return render(request, "home.html")
-def AboutPage(request):
-    return render(request, "about.html")
+    return render(request, "Home.html")
+# def AboutPage(request):
+#     return render(request, "about.html")
 def ContactPage(request):
     return render(request, "Contact.html")
 def LeaderboardPage(request):
@@ -75,3 +76,9 @@ def InscriptionPage(request):
 
 def ConnectionPage(request):
     return render(request, "Login.html")
+def UsPage(request):
+    return render(request, "Us.html")
+
+def team_page(request):
+    team_members = TeamMember.objects.all()
+    return render(request, 'team/team_page.html', {'team_members': team_members})
