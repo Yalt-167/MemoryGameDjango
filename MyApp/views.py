@@ -13,17 +13,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-class Index(View):
-    template = "index.html"
-
-    def get (self,request):
-        return render(request,self.template)
-    
-class Login(View):
-    template = 'Login.html'
-    def get(self,request):
-        return render(request,self.template)
-
 # functions that allow for the site to work, they allow the display of the html 
 # first part are the ones of the far left of our nav bar
 
@@ -39,7 +28,7 @@ def SignUp(request):
             user = User.objects.create_user(username, email, password)
             user.save()
             print("User created successfully")
-            return redirect("http://127.0.0.1:8000/about/")
+            return redirect("http://127.0.0.1:8000/About/")
         except Exception as e:
             print(f"Error creating user: {e}")
     	
@@ -70,39 +59,32 @@ def Logout(request):
     if request.user.is_authenticated:
         logout(request)
         print("got through signout")
-    return redirect("http://127.0.0.1:8000/about/")
+    return redirect("http://127.0.0.1:8000/About/")
 
 def HomePage(request):
-    return render(request, "home.html")
+    return render(request, "Home.html")
+def HomePageFromElseWhere(request):
+    return render(request, "../Home.html")
 def AboutPage(request):
-    return render(request, "about.html")
+    return render(request, "About.html")
 def ContactPage(request):
     return render(request, "Contact.html")
+def UsPage(request):
+    return render(request, "Us.html")
 
-def LeaderboardPage(request):
 
-    top_performances = list(Performance.objects.order_by("-score"))[:10]
-    print(top_performances)
-    return render(request, 'leaderboard.html', {'top_performances': top_performances})
 
 # second part are the ones of the far right of our nav bar
 
-def InscriptionPage(request):
+def SignUpPage(request):
     return render(request, "SignUp.html")
 
-def ConnectionPage(request):
+def LoginPage(request):
     return render(request, "Login.html")
-
-
-def AboutPage(request):
-    return render(request, "about.html")
-
-def ContactPage(request):
-    return render(request, "contact.html")
 
 def LeaderboardPage(request):
     top_performances = Performance.objects.order_by("-score")[:10]
-    return render(request, "leaderboard.html", {"top_performances": top_performances})
+    return render(request, "Leaderboards.html", {"top_performances": top_performances})
 
 
 # Basically what handles the beginining (setup) and end (Results) of the game

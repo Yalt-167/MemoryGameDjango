@@ -7,16 +7,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
         <title>Meme-ory Game</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="path/to/bootstrap/css/bootstrap.min.css">
-        <script src="path/to/bootstrap/js/bootstrap.min.js"></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <a href = "{% url 'memoryGame' %}">Play Meme-Ory</a>
+        <a href = "{% url 'MemoryGame' %}">Play Meme-Ory</a>
     </body>
 </html> 
-{% endblock %}
+
 
 <body>
 
@@ -28,11 +26,11 @@
     <script src="https://code.jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
-    <div class="grid">
+    <!-- <div class="grid">
         {% for box in boxes %}
         <div class="box" data-value="{{ box.value }}">{{ box.value }}</div>
         {% endfor %}
-    </div>
+    </div> -->
 </body>
 
 </html>
