@@ -18,13 +18,10 @@ from .models import Score
 # first part are the ones of the far left of our nav bar
 
 def SignUp(request):
-    print("Blablabla")
-
     if request.method == "POST":
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
