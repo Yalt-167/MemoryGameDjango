@@ -1,6 +1,5 @@
 from django.contrib import admin
 from MyApp import views
-from MyApp.views import sign_up
 from django.urls import path
 # from .views import Home
 # from .views import leaderboard
@@ -23,7 +22,8 @@ urlpatterns = [
     path("header/",lambda x : x, name ="header"),
     # path('', views.Index.as_view(), name='index'),
     path('Login/', views.login_user, name='login'),
-    path('SignUp/', sign_up, name='sign_up'),
+    path('SignUp/', views.sign_up, name='sign_up'),
+    path('LogOut/', views.LogOut, name='LogOut'),
 ]
 
 

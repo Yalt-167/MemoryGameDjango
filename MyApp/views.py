@@ -62,6 +62,14 @@ def login_user(request):
         return ConnectionPage(request)
 
 
+def LogOut(request):
+    print("signout was called")
+    if request.user.is_authenticated:
+        logout(request)
+        print("got through signout")
+    return redirect("http://127.0.0.1:8000/about/")
+
+
 def HomePage(request):
     return render(request, "home.html")
 
@@ -84,3 +92,4 @@ def InscriptionPage(request):
 
 def ConnectionPage(request):
     return render(request, "Login.html")
+
