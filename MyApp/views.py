@@ -12,9 +12,6 @@ from .Card import Card
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-# from .models import Box
-# from .models import Users
-# Verifying the user's login info
 
 class Index(View):
     template = "index.html"
