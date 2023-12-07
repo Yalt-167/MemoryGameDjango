@@ -12,6 +12,7 @@ from .Card import Card
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import Score
 
 # functions that allow for the site to work, they allow the display of the html 
 # first part are the ones of the far left of our nav bar
@@ -83,7 +84,7 @@ def LoginPage(request):
     return render(request, "Login.html")
 
 def LeaderboardPage(request):
-    top_performances = Performance.objects.order_by("-score")[:10]
+    top_performances = Score.objects.order_by("-score")[:10]
     return render(request, "Leaderboards.html", {"top_performances": top_performances})
 
 
