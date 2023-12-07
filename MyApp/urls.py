@@ -18,6 +18,7 @@ urlpatterns = [
     path('Login/', views.login_user, name='login'),
     path('SignUp/', views.sign_up, name='sign_up'),
     path('LogOut/', views.LogOut, name='LogOut'),
+    path('Memory/', views.MemoryGame, name="memoryGame"),
 ]
 
 

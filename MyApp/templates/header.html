@@ -52,26 +52,29 @@
             <ul class="navbar-nav mr-auto">
                 <!-- elements on the far left -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">home</a>
+                    <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'About' %}">about</a>
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Contact' %}">contact</a>
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Leaderboard' %}">classement</a>
+                    <a class="nav-link" href="{% url 'leaderboard' %}">Classement</a>
                 </li>
             </ul>
             
             <ul class="navbar-nav ml-auto">
                 <!-- elements on the far right -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'SignUp' %}">inscription</a>
+                    <a class="nav-link" href="{% url 'sign_up' %}">Inscription</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Login'%}">connexion</a>
+                    <a class="nav-link" href="{% url 'login'%}">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'LogOut'%}">Deconnexion</a>
                 </li>
             </ul>
         </div>

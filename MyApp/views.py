@@ -2,19 +2,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Performance
+from .models import Score
 from django.views import View
 from django.shortcuts import render, HttpResponse, redirect
 import random as rdm
-from .models import Performance, User   
+from .models import User   
 from django.views import View
 from .Card import Card
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-# from .models import Box
-# from .models import Users
-# Verifying the user's login info
 
 class Index(View):
     template = "index.html"
@@ -77,7 +74,6 @@ def LogOut(request):
         print("got through signout")
     return redirect("http://127.0.0.1:8000/about/")
 
-
 def HomePage(request):
     return render(request, "home.html")
 
@@ -112,71 +108,6 @@ def LeaderboardPage(request):
     top_performances = Performance.objects.order_by("-score")[:10]
     return render(request, "leaderboard.html", {"top_performances": top_performances})
 
-# ===============================================================================================
-# second part are the ones of the far right of our nav bar
-# ==============================================
-
-# def SignUpPage(request):
-#     return render(request, "SignUp.html")
-
-# def LoginPage(request):
-#     return render(request, "Login.html")
-
-# # ===============================================================================================
-
-# def SignUp(request):
-#     print("signup was called")
-#     if request.method == "POST":
-
-#         username = request.POST.get("username", None)
-#         email = request.POST.get("email", None)
-#         password = request.POST.get("password", None)
-
-#         if username is not None and email is not None and password is not None:
-
-#             user = User.objects.create_user(
-#                 username=username,
-#                 email=email,
-#                 password=password
-#             )
-
-#             user.save()
-
-#             login(request, user)
-#             print("got through signup")
-
-#     return HomePage(request)
-
-# def LoginFunction(request):
-#     print("login was called")
-#     if request.method == "POST":
-
-#         user = authenticate(
-#             request,
-#             username=request.POST.get("username", None),
-#             password=request.POST.get("password", None)
-#             )
-
-#         if user is not None:
-#             login(request, user)
-#             print("got through login")
-#             return HomePage(request)
-#         else:
-#             messages.success(request, ("Identifiant ou mot de passe incorrect"))
-#             return LoginPage(request)
-#     else:
-#         return render(request, "Login.html", {})
-
-
-# def SignOut(request):
-#     print("signout was called") # perhaps the print doesn t take effect in that specific context
-#     if request.user.is_authenticated:
-#         logout(request, request.user)
-#         print("got through signout")
-#     return HomePage(request)
-
-
-# ===============================================================================================
 
 # Basically what handles the beginining (setup) and end (Results) of the game
 @login_required
