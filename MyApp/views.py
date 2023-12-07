@@ -1,4 +1,9 @@
-
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib import messages
+from .models import Performance
+from django.views import View
 from django.shortcuts import render, HttpResponse, redirect
 import random as rdm
 from .models import Performance, User   
@@ -7,22 +12,95 @@ from .Card import Card
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+# from .models import Box
+# from .models import Users
+# Verifying the user's login info
 
-# Create your views here.
-# file where the differents pages are created
-# a render is made from a .html file known as template (allow us to embed python code in it)
-# -> the render enables us to pass arguments in the .html (as a JSON) making more dynamic pages possible
+class Index(View):
+    template = "index.html"
 
+    def get (self,request):
+        return render(request,self.template)
+    
+class Login(View):
+    template = 'Login.html'
+    def get(self,request):
+        return render(request,self.template)
 
-
-
-# ==============================================================================================
 # functions that allow for the site to work, they allow the display of the html 
 # first part are the ones of the far left of our nav bar
-# ==============================================
+
+def sign_up(request):
+    print("Blablabla")
+
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            print("User created successfully")
+            return redirect("http://127.0.0.1:8000/about/")
+        except Exception as e:
+            print(f"Error creating user: {e}")
+    	
+    return render(request,'SignUp.html', {})
+
+# Login
+def login_user(request):
+    
+    if request.method == "POST":
+        # Checking the data in the database
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
+
+        user = authenticate(request, username=username, password=password)
+
+    # If the data is same in the database and in the connexion page redirecting toward  the next page
+        if user is not None:
+            login(request,user)
+            return AboutPage(request)
+            # redirect vers Memory.html
+        else:
+            messages.success(request, ("Identifiant ou mot de passe incorrect"))
+            return ContactPage(request)
+    else:
+        return ConnectionPage(request)
+
+
+def LogOut(request):
+    print("signout was called")
+    if request.user.is_authenticated:
+        logout(request)
+        print("got through signout")
+    return redirect("http://127.0.0.1:8000/about/")
+
 
 def HomePage(request):
     return render(request, "home.html")
+
+def HomePageFromElseWhere(request):
+    return render(request, "../home.html")
+
+def AboutPage(request):
+    return render(request, "about.html")
+def ContactPage(request):
+    return render(request, "Contact.html")
+def LeaderboardPage(request):
+    top_performances = Performance.objects.order_by('-score')[:10]
+    print(top_performances)
+    return render(request, 'leaderboard.html', {'top_performances': top_performances})
+
+# second part are the ones of the far right of our nav bar
+
+def InscriptionPage(request):
+    return render(request, "SignUp.html")
+
+def ConnectionPage(request):
+    return render(request, "Login.html")
+
 
 def AboutPage(request):
     return render(request, "about.html")
@@ -38,64 +116,64 @@ def LeaderboardPage(request):
 # second part are the ones of the far right of our nav bar
 # ==============================================
 
-def SignUpPage(request):
-    return render(request, "SignUp.html")
+# def SignUpPage(request):
+#     return render(request, "SignUp.html")
 
-def LoginPage(request):
-    return render(request, "Login.html")
+# def LoginPage(request):
+#     return render(request, "Login.html")
 
-# ===============================================================================================
+# # ===============================================================================================
 
-def SignUp(request):
-    print("signup was called")
-    if request.method == "POST":
+# def SignUp(request):
+#     print("signup was called")
+#     if request.method == "POST":
 
-        username = request.POST.get("username", None)
-        email = request.POST.get("email", None)
-        password = request.POST.get("password", None)
+#         username = request.POST.get("username", None)
+#         email = request.POST.get("email", None)
+#         password = request.POST.get("password", None)
 
-        if username is not None and email is not None and password is not None:
+#         if username is not None and email is not None and password is not None:
 
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password
-            )
+#             user = User.objects.create_user(
+#                 username=username,
+#                 email=email,
+#                 password=password
+#             )
 
-            user.save()
+#             user.save()
 
-            login(request, user)
-            print("got through signup")
+#             login(request, user)
+#             print("got through signup")
 
-    return HomePage(request)
+#     return HomePage(request)
 
-def LoginFunction(request):
-    print("login was called")
-    if request.method == "POST":
+# def LoginFunction(request):
+#     print("login was called")
+#     if request.method == "POST":
 
-        user = authenticate(
-            request,
-            username=request.POST.get("username", None),
-            password=request.POST.get("password", None)
-            )
+#         user = authenticate(
+#             request,
+#             username=request.POST.get("username", None),
+#             password=request.POST.get("password", None)
+#             )
 
-        if user is not None:
-            login(request, user)
-            print("got through login")
-            return HomePage(request)
-        else:
-            messages.success(request, ("Identifiant ou mot de passe incorrect"))
-            return LoginPage(request)
-    else:
-        return render(request, "Login.html", {})
+#         if user is not None:
+#             login(request, user)
+#             print("got through login")
+#             return HomePage(request)
+#         else:
+#             messages.success(request, ("Identifiant ou mot de passe incorrect"))
+#             return LoginPage(request)
+#     else:
+#         return render(request, "Login.html", {})
 
 
-def SignOut(request):
-    print("signout was called") # perhaps the print doesn t take effect in that specific context
-    if request.user.is_authenticated:
-        logout(request, request.user)
-        print("got through signout")
-    return HomePage(request)
+# def SignOut(request):
+#     print("signout was called") # perhaps the print doesn t take effect in that specific context
+#     if request.user.is_authenticated:
+#         logout(request, request.user)
+#         print("got through signout")
+#     return HomePage(request)
 
 
 # ===============================================================================================
