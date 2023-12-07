@@ -9,21 +9,18 @@ import random as rdm
 from .models import User   
 from django.views import View
 from .Card import Card
-from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from .models import Score
-
+import datetime
 # functions that allow for the site to work, they allow the display of the html 
 # first part are the ones of the far left of our nav bar
 
 def SignUp(request):
-    print("Blablabla")
 
     if request.method == "POST":
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
+        username = request.POST.get("username", None)
+        email = request.POST.get("email", None)
+        password = request.POST.get("password", None)
 
         try:
             user = User.objects.create_user(username, email, password)
@@ -47,19 +44,19 @@ def Login(request):
     # If the data is same in the database and in the connexion page redirecting toward  the next page
         if user is not None:
             login(request,user)
+            [Score(user=request.user, score_value=rdm.randint(0, 100), timestamp=datetime.datetime.now()).save() for _ in range(rdm.randint(3, 10))]
             return HomePage(request)
             # redirect vers Memory.html
         else:
-            messages.success(request, ("Identifiant ou mot de passe incorrect"))
+            messages.error(request, ("Identifiant ou mot de passe incorrect"))
+            # messages.success()
             return ContactPage(request)
     else:
         return LoginPage(request)
 
 def Logout(request):
-    print("signout was called")
     if request.user.is_authenticated:
         logout(request)
-        print("got through signout")
     return redirect("http://127.0.0.1:8000/About/")
 
 def HomePage(request):
@@ -84,8 +81,8 @@ def LoginPage(request):
     return render(request, "Login.html")
 
 def LeaderboardPage(request):
-    top_performances = Score.objects.order_by("-score_value")[:10]
-    return render(request, "Leaderboards.html", {"top_performances": top_performances})
+    topScores = Score.objects.order_by("-score_value")[:10]
+    return render(request, "Leaderboards.html", {"topScores": topScores})
 
 
 # Basically what handles the beginining (setup) and end (Results) of the game
@@ -103,6 +100,5 @@ def ParseGameResults(request):
   
     print("Total:", end=" ")
     points: float = request.POST.get("totalPoints", None)
-    print(points)
-
+    Score(user=request.user, score_value=points, timestamp=datetime.datetime.now()).save()
     return HomePage(request)
