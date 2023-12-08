@@ -46,7 +46,7 @@
                     </thead>
                     <tbody>
                         {% for score in scores %}
-                            {% if score.user == user.username %}
+                            {% if score.user.username == user.username %}
                                 <tr>
                                     <td>{{ score.user }}</td>
                                     <td>{{ score.score_value }}</td>

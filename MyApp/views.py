@@ -96,5 +96,5 @@ def MemoryGame(request):
     return render(request, "Memory.html", {f"cards": list(enumerate(cards))})
 
 def ParseGameResults(request):
-    Score(user=request.user, score_value=request.POST.get("totalPoints", None), timestamp=datetime.datetime.now()).save()
+    Score(user=request.user, score_value=request.POST.get("totalPoints", 0), timestamp=datetime.datetime.now()).save()
     return HomePage(request)
