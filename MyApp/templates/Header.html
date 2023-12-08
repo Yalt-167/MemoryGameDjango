@@ -1,17 +1,12 @@
-<!-- fichier header séparer pour être utiliser sur différente pages -->
+<!-- fichier header séparer pour être utilise sur différente pages -->
 <!-- recréation d'un head pour inclure à chaque fois le fichier style.css -->
 {% block header_ %}
 {% load static %}
 <head>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Meme-ory Game</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game</title>
     <style>
         .grid {
             display: grid;
@@ -42,7 +37,7 @@
             background-size: auto 100%;
             background-attachment: fixed;
             zoom: 175%;
-            margin: 0; /* Remove default body margin */
+            margin: 0;
             ;
         }
 
@@ -83,7 +78,6 @@
             }
         }
 
-/* Add similar rules for other buttons if needed */
 
         .bn13 {
             display: inline-block;

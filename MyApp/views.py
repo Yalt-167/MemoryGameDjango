@@ -6,6 +6,7 @@ from django.shortcuts import render, HttpResponse, redirect
 import random as rdm  
 from .Card import Card
 import datetime
+import json
 # functions that define how a site should be rendered based on a template -> .html files that hold logic for further customization
 
 def SignUp(request):
@@ -40,8 +41,9 @@ def Login(request):
             #     Score(
             #         user=request.user,
             #         score_value=rdm.randint(0, 100),
-            #         timestamp=datetime.datetime.now()).save() for _ in range(rdm.randint(3, 10))
-            #         ]
+            #         timestamp=datetime.datetime.now()
+            #     ).save() for _ in range(rdm.randint(3, 10))
+            # ]
             return HomePage(request)
             # redirect vers Memory.html
         else:
@@ -96,5 +98,6 @@ def MemoryGame(request):
     return render(request, "Memory.html", {f"cards": list(enumerate(cards))})
 
 def ParseGameResults(request):
-    Score(user=request.user, score_value=request.POST.get("totalPoints", 0), timestamp=datetime.datetime.now()).save()
+    if request.method == "POST":
+        Score(user=request.user, score_value=request.POST.get("totalPoints", 0), timestamp=datetime.datetime.now()).save()
     return HomePage(request)
