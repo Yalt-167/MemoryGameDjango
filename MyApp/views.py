@@ -1,19 +1,12 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Score
-from django.views import View
 from django.shortcuts import render, HttpResponse, redirect
-import random as rdm
-from .models import User   
-from django.views import View
+import random as rdm  
 from .Card import Card
-from django.contrib import messages
-from .models import Score
 import datetime
-# functions that allow for the site to work, they allow the display of the html 
-# first part are the ones of the far left of our nav bar
+# functions that define how a site should be rendered based on a template -> .html files that hold logic for further customization
 
 def SignUp(request):
 
@@ -25,7 +18,7 @@ def SignUp(request):
             user = User.objects.create_user(username, email, password)
             user.save()
             print("User created successfully")
-            return redirect("http://127.0.0.1:8000/About/")
+            return redirect("http://127.0.0.1:8000/Profil/")
         except Exception as e:
             print(f"Error creating user: {e}")
     	
@@ -43,12 +36,12 @@ def Login(request):
     # If the data is same in the database and in the connexion page redirecting toward  the next page
         if user is not None:
             login(request,user)
-            [
-                Score(
-                    user=request.user,
-                    score_value=rdm.randint(0, 100),
-                    timestamp=datetime.datetime.now()).save() for _ in range(rdm.randint(3, 10))
-                    ]
+            # [
+            #     Score(
+            #         user=request.user,
+            #         score_value=rdm.randint(0, 100),
+            #         timestamp=datetime.datetime.now()).save() for _ in range(rdm.randint(3, 10))
+            #         ]
             return HomePage(request)
             # redirect vers Memory.html
         else:
@@ -61,20 +54,18 @@ def Login(request):
 def Logout(request):
     if request.user.is_authenticated:
         logout(request)
-    return redirect("http://127.0.0.1:8000/About/")
+    return redirect("http://127.0.0.1:8000/Profil/")
 
 def HomePage(request):
     return render(request, "Home.html")
 def HomePageFromElseWhere(request):
     return render(request, "../Home.html")
-def AboutPage(request):
-    return render(request, "About.html")
+def ProfilPage(request):
+    return render(request, "Profil.html", {"scores": Score.objects.all()})
 def ContactPage(request):
     return render(request, "Contact.html")
 def UsPage(request):
     return render(request, "Us.html")
-
-
 
 # second part are the ones of the far right of our nav bar
 
@@ -85,24 +76,25 @@ def LoginPage(request):
     return render(request, "Login.html")
 
 def LeaderboardPage(request):
-    topScores = Score.objects.order_by("-score_value")[:10][::-1]
-    return render(request, "Leaderboards.html", {"topScores": topScores})
+    return render(request, "Leaderboards.html", {"topScores": Score.objects.order_by("-score_value")[::-1]})
 
 
 # Basically what handles the beginining (setup) and end (Results) of the game
+
+def SetupCards():
+    cards = [Card(f"meme{i}") for i in range(8)] + [Card(f"meme{i}") for i in range(8)]
+    # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
+    rdm.shuffle(cards)
+
+    return cards
 
 def MemoryGame(request):
     if not request.user.is_authenticated:
         return LoginPage(request)
     # list composed of cards with the name meme0 through meme7 with 2 copies fo each
-    cards = [Card(f"meme{i}") for i in range(8)] + [Card(f"meme{i}") for i in range(8)]
-    # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
-    rdm.shuffle(cards)
+    cards = SetupCards()
     return render(request, "Memory.html", {f"cards": list(enumerate(cards))})
 
 def ParseGameResults(request):
-  
-    print("Total:", end=" ")
-    points: float = request.POST.get("totalPoints", None)
-    Score(user=request.user, score_value=points, timestamp=datetime.datetime.now()).save()
+    Score(user=request.user, score_value=request.POST.get("totalPoints", 0), timestamp=datetime.datetime.now()).save()
     return HomePage(request)

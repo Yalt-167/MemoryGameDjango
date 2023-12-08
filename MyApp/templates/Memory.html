@@ -1,8 +1,7 @@
-
+{% extends "header.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% extends "header.html" %}
     {% load static %}
 
     {% block content %}
@@ -15,26 +14,32 @@
     
     <title>Meme-Ory</title>
     <style>
-        GameContainer {
+        #GameContainer {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            margin-top: 100px;
         }
-
+        
+        
+        body {
+            zoom: 80%;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px;
+            margin-top: 500px;
         }
 
         td {
-            border: 1px solid #ddd;
+            border: 1px solid #000000;
             padding: 15px;
             text-align: center;
             width: 100px;
-            height: 200px;
+            height: 500px;
         }
 
         td:hover {
@@ -198,8 +203,6 @@
                     }
                 }
             }
-
-    
             // card already flipped
             
         }

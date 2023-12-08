@@ -1,38 +1,74 @@
 
-{%extends "header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Meme-ory Game</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-        <meta charset="UTF-8">
-        <style>
-            
-        </style>
-    </head>
-    <body>
-        <h1>Leaderboard</h1>
-        <table>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Meme-ory Game</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styles (Add your own styles here) */
+
+        /* Container Styles */
+        .container {
+            margin-top: 5rem; /* Adjust as needed */
+        }
+
+        /* Table Styles */
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #000000;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        /* Margin Utilities */
+        .mt-5 {
+            margin-top: 3rem !important; /* Adjust as needed */
+        }
+
+        .mb-4 {
+            margin-bottom: 1.5rem !important; /* Adjust as needed */
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Leaderboard</h1>
+        <table class="table">
             <thead>
                 <tr>
-                    <th>Username</th>&#9;
-                    <th>Score</th>&#9;
-                    <th>Date</th>&#9;
+                    <th>Username</th>
+                    <th>Score</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
-            {% for score in topScores %}
-                <tr><td>{{ score.user }}</td></tr><br>
-                <tr><td>{{ score.score_value }}</td></tr><br>
-                <tr><td>{{ score.timestamp }}</td></tr><br>
-            {% endfor %}
+                {% for score in topScores %}
+                    <tr>
+                        <td>{{ score.user }}</td>
+                        <td>{{ score.score_value }}</td>
+                        <td>{{ score.timestamp }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
-    </body>
+    </div>
+</body>
 </html>
 {% endblock %}
