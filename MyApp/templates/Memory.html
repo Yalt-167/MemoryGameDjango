@@ -11,16 +11,6 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <title>Meme-Ory</title>
     <style>
-        #GameContainer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            margin-top: 100px;
-        }
-        
-        
         body {
             zoom: 80%;
         }
@@ -126,7 +116,7 @@
                 <td>
                     <span>
                         <span>
-                            <img src = "{% static 'images/' %}carte1.png" alt = "hilariousMeme({{ cards.name }})" id="{{ idx }}" onclick="FlipCard('{{ card.name }}', '{{ idx }}')">
+                            <img src = "{% static 'images/' %}cardBack.png" alt = "hilariousMeme({{ cards.name }})" id="{{ idx }}" onclick="FlipCard('{{ card.name }}', '{{ idx }}')">
                         </span>
                     </span>
                 </td>

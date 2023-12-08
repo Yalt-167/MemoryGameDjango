@@ -88,6 +88,7 @@ def LeaderboardPage(request):
 def SetupCards():
     cards = [Card(f"meme{i}") for i in range(8)] + [Card(f"meme{i}") for i in range(8)]
     # (+) instead of (*2) in order to avoid making copies (meme0 would refer to both card with that label at once -> modifying one would modify the other)
+
     rdm.shuffle(cards)
 
     return cards
