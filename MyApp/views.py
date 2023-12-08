@@ -6,9 +6,11 @@ from django.shortcuts import render, HttpResponse, redirect
 import random as rdm  
 from .Card import Card
 import datetime
-import json
+import pytz
 # functions that define how a site should be rendered based on a template -> .html files that hold logic for further customization
+TIMEZONEPARIS = pytz.timezone('Europe/Paris')
 
+# Specify the Paris timezone
 def SignUp(request):
 
     if request.method == "POST":
@@ -99,5 +101,5 @@ def MemoryGame(request):
 
 def ParseGameResults(request):
     if request.method == "POST":
-        Score(user=request.user, score_value=request.POST.get("totalPoints", 0), timestamp=datetime.datetime.now()).save()
+        Score(user=request.user, score_value=request.POST.get("totalPoints", 0), timestamp=datetime.datetime.now(TIMEZONEPARIS)).save()
     return HomePage(request)
