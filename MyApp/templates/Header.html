@@ -4,6 +4,7 @@
 {% load static %}
 <head>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Meme-ory Game</title>
@@ -21,7 +22,7 @@
         .box {
             width: 100px;
             height: 100px;
-            background-color: #e0e0e0;
+            background-color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -31,14 +32,17 @@
         body {
             background: url('left-background-image.jpg') left repeat-y, url('right-background-image.jpg') right repeat-y;
             background-size: auto 100%;
-            background-attachment: fixed;   
-            zoom: 175%;       
+            background-attachment: fixed;
+            zoom: 175%;
+            margin: 0; /* Remove default body margin */
         }
+
+
         .content-container {
             border-left: 175px solid rgba(0, 0, 0, 0.897);
             border-right: 175px solid rgba(0, 0, 0, 0.897);
             background-color: rgba(255, 255, 255, 0.897);
-            min-height: calc(100vh - 56px - 56px); /* Set the minimum height to fill the remaining space */
+            box-sizing: border-box;
         }
         .nav .nav-item {
             animation: fadeInUp 0.4s ease-in-out;
@@ -118,6 +122,16 @@
         }
         }
 
+        @media screen and (max-width:600px){
+            body { 
+                zoom: 60%; 
+            }
+            /* Add similar rules for other buttons if needed */
+            .bn13 {
+                font-size: 150%;
+            }
+        }
+
         
 
 
@@ -180,20 +194,19 @@
 
                     <li class="nav-item">
                         <a class="bn13" href="{% url 'SignUp' %}">Inscription</a>
-                    </li>
-                    
-                    
-                    
-                    
+                    </li> 
                 </ul>
             </div>
         </nav>
     </header>
-    <div class="content-container">
-        
+    <div class="content">
         {% block content %}
         {% endblock %}
-        
     </div>
+    <footer class="containerfooter" >
+        <div class="container text-center">
+            <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 {% endblock %}
