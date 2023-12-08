@@ -32,18 +32,14 @@
         </style>
     </head>
     <body>
-
-        <h1>raor</h1>
-        
-        
         {% if user.is_authenticated %}
             Hi {{ user.username }}!
+            Hi {{ user }}!
         <p><a href="{% url 'Logout' %}">Log Out</a></p>
         {% else %}
         <p>You are not logged in</p>
         <a href="{% url 'Login' %}">Log In</a>
         {% endif %}
-        
     </body>
 </html>
 {% endblock %}

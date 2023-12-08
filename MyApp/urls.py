@@ -1,14 +1,5 @@
-from django.contrib import admin
 from MyApp import views
-
 from django.urls import path
-# from .views import Home
-# from .views import leaderboard
-# from .views import inscription
-# from .views import connexion
-# from .views import about
-# from .views import contact
-# from .views import login
 
 
 urlpatterns = [
