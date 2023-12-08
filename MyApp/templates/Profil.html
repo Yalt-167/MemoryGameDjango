@@ -32,18 +32,37 @@
         </style>
     </head>
     <body>
-
-        <h1>raor</h1>
-        
-        
         {% if user.is_authenticated %}
             Hi {{ user.username }}!
+            <div class="container mt-5">
+                <h1 class="text-center">Leaderboard</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in scores %}
+                            {% if score.user == user.username %}
+                                <tr>
+                                    <td>{{ score.user }}</td>
+                                    <td>{{ score.score_value }}</td>
+                                    <td>{{ score.timestamp }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         <p><a href="{% url 'Logout' %}">Log Out</a></p>
         {% else %}
-        <p>You are not logged in</p>
-        <a href="{% url 'Login' %}">Log In</a>
+            <p>You are not logged in</p>
+            <a href="{% url 'Login' %}">Log In</a>
         {% endif %}
-        
+
     </body>
 </html>
 {% endblock %}
