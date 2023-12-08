@@ -30,9 +30,10 @@
     </head>
     <body>
         {% if user.is_authenticated %}
-            Hi {{ user.username }}!
+        <br><br>
+            <center><strong><h1>Hi {{ user.username }}!</h1></strong></center>
             <div class="container mt-5">
-                <h1 class="text-center">Leaderboard</h1>
+                <h2 class="text-center">Leaderboard</h2>
                 <table class="table">
                     <thead>
                         <tr>
@@ -54,7 +55,8 @@
                     </tbody>
                 </table>
             </div>
-        <p><a href="{% url 'Logout' %}">Log Out</a></p>
+            <br>
+        <center><p><a href="{% url 'Logout' %}">Log Out</a></p></center>
         {% else %}
             <p>You are not logged in</p>
             <a href="{% url 'Login' %}">Log In</a>

@@ -65,7 +65,7 @@ def HomePage(request):
 def HomePageFromElseWhere(request):
     return render(request, "../Home.html")
 def ProfilPage(request):
-    return render(request, "Profil.html", {"scores": Score.objects.all()})
+    return render(request, "Profil.html", {"scores": Score.objects.order_by("-score_value")[::-1]})
 def ContactPage(request):
     return render(request, "Contact.html")
 def UsPage(request):
