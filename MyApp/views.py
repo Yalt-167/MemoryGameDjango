@@ -36,12 +36,12 @@ def Login(request):
     # If the data is same in the database and in the connexion page redirecting toward  the next page
         if user is not None:
             login(request,user)
-            [
-                Score(
-                    user=request.user,
-                    score_value=rdm.randint(0, 100),
-                    timestamp=datetime.datetime.now()).save() for _ in range(rdm.randint(3, 10))
-                    ]
+            # [
+            #     Score(
+            #         user=request.user,
+            #         score_value=rdm.randint(0, 100),
+            #         timestamp=datetime.datetime.now()).save() for _ in range(rdm.randint(3, 10))
+            #         ]
             return HomePage(request)
             # redirect vers Memory.html
         else:
