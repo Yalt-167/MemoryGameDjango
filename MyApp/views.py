@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Score
-from django.views import View
 from django.shortcuts import render, HttpResponse, redirect
 import random as rdm  
 from .Card import Card
@@ -19,7 +18,7 @@ def SignUp(request):
             user = User.objects.create_user(username, email, password)
             user.save()
             print("User created successfully")
-            return redirect("http://127.0.0.1:8000/About/")
+            return redirect("http://127.0.0.1:8000/Profil/")
         except Exception as e:
             print(f"Error creating user: {e}")
     	
@@ -55,14 +54,14 @@ def Login(request):
 def Logout(request):
     if request.user.is_authenticated:
         logout(request)
-    return redirect("http://127.0.0.1:8000/About/")
+    return redirect("http://127.0.0.1:8000/Profil/")
 
 def HomePage(request):
     return render(request, "Home.html")
 def HomePageFromElseWhere(request):
     return render(request, "../Home.html")
-def AboutPage(request):
-    return render(request, "About.html")
+def ProfilPage(request):
+    return render(request, "Profil.html", {"scores": Score.objects.all()})
 def ContactPage(request):
     return render(request, "Contact.html")
 def UsPage(request):
