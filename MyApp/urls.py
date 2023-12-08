@@ -16,7 +16,7 @@ urlpatterns = [
     path('Login/', views.Login, name='Login'),
     path('LogOut/', views.Logout, name='Logout'),
     path('Memory/', views.MemoryGame, name="MemoryGame"),
-    path('../', views.ParseGameResults, name="ParseGameResults"),
+    path('ParseGameResults', views.ParseGameResults, name="ParseGameResults"),
     path('Us', views.UsPage, name="Us"),
 ]
 
