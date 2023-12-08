@@ -123,15 +123,17 @@
         }
 
         @media screen and (max-width:600px){
-            body { 
-                zoom: 60%; 
+            body {
+                zoom: 50%; 
+            }
+            img{
+                max-width: 100px;
             }
             /* Add similar rules for other buttons if needed */
             .bn13 {
                 font-size: 150%;
             }
         }
-
         
 
 
@@ -150,7 +152,7 @@
 
 
         
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color:rgba(0, 0, 0, 0.897);">
+        <nav class="navbar navbar-expand-md navbar-light" style="background-color:rgba(0, 0, 0, 0.897);">
             <a href="{% url 'Home' %}"width="150"><img src="{% static 'images/' %}LogoSite.png" alt="logo du site" width="150" ></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
